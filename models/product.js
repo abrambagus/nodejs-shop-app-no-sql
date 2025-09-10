@@ -7,7 +7,7 @@ class Product {
     this.price = price;
     this.description = description;
     this.imageUrl = imageUrl;
-    this._id = mongodb.ObjectId.createFromHexString(id);
+    this._id = id ? mongodb.ObjectId.createFromHexString(id) : null;
   }
 
   save() {
@@ -64,6 +64,17 @@ class Product {
         console.log(err);
         return null;
       });
+  }
+
+  static deleteById(prodId) {
+    const db = getDb();
+    return db
+      .collection("products")
+      .deleteOne({ _id: mongodb.ObjectId.createFromHexString(prodId) })
+      .then((result) => {
+        console.log("Deleted");
+      })
+      .catch((err) => console.log(err));
   }
 }
 
