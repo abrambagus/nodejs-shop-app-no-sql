@@ -78,6 +78,8 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
   Product.find()
+    // .select("title price -_id") // contoh select field tertentu, exclude _id
+    // .populate("userId", "name") // untuk mendapatkan data user lengkap
     .then((products) => {
       res.render("admin/products", {
         prods: products,
